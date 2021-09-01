@@ -90,7 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             // cat,
             Text(
-              'ถ้าคุณกดเพิ่ม ปากมันจะอ้า ถ้าคุณกดลง ปากก็จะหุบ',
+              'ถ้าคุณกดเพิ่ม ปากมันจะอ้า ถ้าคุณกดลง ปากก็จะหุบ ปรับปรุง',
             ),
             Text(
               '$_counter',
