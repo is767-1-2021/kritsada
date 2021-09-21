@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
+import 'model/first_from_model.dart';
+import 'package:provider/provider.dart';
+
 class sixthPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('First Form'),
+        title: Text('First Form six page'),
       ),
       body: MyCustomForm(),
     );
@@ -44,6 +47,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
             onSaved: (value) {
               _firstName = value;
             },
+            initialValue: context.read<FirstFormModel>().firstName,
           ),
           TextFormField(
             decoration: InputDecoration(
@@ -60,6 +64,7 @@ class _MyCustomFormState extends State<MyCustomForm> {
             onSaved: (value) {
               _lastName = value;
             },
+            initialValue: context.read<FirstFormModel>().lastName,
           ),
           TextFormField(
             decoration: InputDecoration(
@@ -80,7 +85,9 @@ class _MyCustomFormState extends State<MyCustomForm> {
             onSaved: (value) {
               _age = int.parse(value!);
             },
+            initialValue: context.read<FirstFormModel>().age.toString(),
           ),
+
           /* ElevatedButton(onPressed: () {
             if (_formKey.currentState!.validate()) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -94,8 +101,12 @@ class _MyCustomFormState extends State<MyCustomForm> {
                 //ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                 //     content: Text('Hoorayyyy = $_firstName $_lastName $_age'),
                 //                ));
-                var response = 'Hoorayyyy = $_firstName $_lastName $_age';
-                Navigator.pop(context, response);
+                // var response = 'Hoorayyyy = $_firstName $_lastName $_age';
+                // Navigator.pop(context, response);
+                context.read<FirstFormModel>().firstName = _firstName;
+                context.read<FirstFormModel>().lastName = _lastName;
+                context.read<FirstFormModel>().age = _age;
+                Navigator.pop(context);
               }
             },
             child: const Text('validate'),

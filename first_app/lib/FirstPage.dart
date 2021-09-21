@@ -1,5 +1,8 @@
 import 'package:first_app/SecondPage.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'model/first_from_model.dart';
 
 class FirstPage extends StatefulWidget {
   @override
@@ -7,7 +10,7 @@ class FirstPage extends StatefulWidget {
 }
 
 class _FirstPageState extends State<FirstPage> {
-  String? _formData = 'ได้โปรดไปกรอกที่หน้าอื่น';
+  //String? _formData = 'ได้โปรดไปกรอกที่หน้าอื่น';
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +45,13 @@ class _FirstPageState extends State<FirstPage> {
           children: [
             Padding(
               padding: EdgeInsets.all(20.0),
+              child: Consumer<FirstFormModel>(
+                builder: (context, form, child) {
+                  return Text('${form.firstName} ${form.lastName} ${form.age}');
+                },
+              ),
+            ),
+            /* padding: EdgeInsets.all(20.0),
               child: Text('$_formData'),
             ),
             ElevatedButton(
@@ -53,6 +63,10 @@ class _FirstPageState extends State<FirstPage> {
                     _formData = response.toString();
                   });
                 }
+              },*/
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/6');
               },
               child: Text('คลิกปุ่มนี้ Fill this form please'),
             ),
