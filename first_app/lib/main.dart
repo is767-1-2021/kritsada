@@ -1,32 +1,62 @@
-import 'package:first_app/eighthPage.dart';
-import 'package:first_app/model/first_from_model.dart';
+//import 'package:first_app/Services/services.dart';
+import 'package:first_app/Services/services.dart';
+import 'package:first_app/controller/todo.dart';
+import 'package:first_app/todo_page.dart';
 import 'package:flutter/material.dart';
-import 'package:first_app/FirstPage.dart';
-import 'package:first_app/SecondPage.dart';
-import 'package:first_app/ThirdPage.dart';
-import 'package:first_app/FourthPage.dart';
-import 'package:first_app/FifthPage.dart';
-import 'package:first_app/sixthPage.dart';
-import 'package:first_app/SevenPage.dart';
-import 'package:provider/provider.dart';
+// import 'package:first_app/eighthPage.dart';
+// import 'package:first_app/model/first_from_model.dart';
+// import 'package:first_app/FirstPage.dart';
+// import 'package:first_app/SecondPage.dart';
+// import 'package:first_app/ThirdPage.dart';
+// import 'package:first_app/FourthPage.dart';
+// import 'package:first_app/FifthPage.dart';
+// import 'package:first_app/sixthPage.dart';
+// import 'package:first_app/SevenPage.dart';
+//import 'package:provider/provider.dart';
+
+void main() {
+  var services = HttpServices();
+  var controller = TodoController(services);
+
+  runApp(TodoApp(controller: controller));
+}
+
+class TodoApp extends StatelessWidget {
+  final TodoController controller;
+  TodoApp({required this.controller});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: TodoPage(
+        controller: controller,
+      ),
+    );
+  }
+}
 
 /*void main() {
   runApp(MyApp());
 }*/
 
-void main() {
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => FirstFormModel(),
-        ),
-      ],
-      child: MyApp(),
-    ),
-  );
-}
+// void main() {
+//   var services = HttpService();
+//   var controller = TodoController(services);
 
+//   runApp(TodoApp(controller: controller));
+
+//   // runApp(
+//   //   MultiProvider(
+//   //     providers: [
+//   //       ChangeNotifierProvider(
+//   //         create: (context) => FirstFormModel(),
+//   //       ),
+//   //     ],
+//   //     child: MyApp(),
+//   //   ),
+//   // );
+// }
+/*
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -164,3 +194,4 @@ class SubmitButton extends StatelessWidget {
     );
   }
 }
+*/
