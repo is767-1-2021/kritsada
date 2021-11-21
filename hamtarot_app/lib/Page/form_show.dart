@@ -93,7 +93,7 @@ class _ShowdataState extends State<Showdata> {
                 borderRadius: BorderRadius.circular(10.0),
               ),
 
-              child: Image.asset('assets/Hamtarot.png'),
+              // child: Image.asset('assets/Hamtarot.png'),
             ),
             Consumer<DataFormModel>(
               builder: (context, form, child) {

@@ -1,5 +1,7 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:hamtarot_app/Login/MyLogin.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, this.title}) : super(key: key);
@@ -11,6 +13,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +27,39 @@ class _MyHomePageState extends State<MyHomePage> {
               'HAMTAROT',
               style: TextStyle(fontSize: 25),
             ),
-            Icon(Icons.brightness_4_sharp, size: 30)
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyLogin(),
+                      //LogInPage(),
+                      //AuthExampleApp(),
+                      //HomeScreen(),
+                    ),
+                  );
+                },
+                icon: Icon(Icons.login, size: 30)),
+            IconButton(
+                onPressed: () async {
+                  FirebaseAuth.instance.signOut();
+                  // context.read<AuthenticationProvider>().signOut();
+                  /* Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AuthExampleApp(),
+                      //LogInPage(),
+                      //AuthExampleApp(),
+                      //HomeScreen(),
+                    ),
+                  );*/
+                  await FirebaseAuth.instance.signOut().then((value) =>
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(builder: (context) => MyLogin()),
+                          (route) => false));
+                },
+                icon: Icon(Icons.logout, size: 30)),
+            //Icon(Icons.settings, size: 30)
           ],
         ),
       ),
@@ -238,7 +273,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         padding: EdgeInsets.only(left: 10),
                         child: Text('ไหว้พระเสริมดวง',
                             style:
-                                TextStyle(color: Colors.white, fontSize: 20)))
+                                TextStyle(color: Colors.white, fontSize: 20))),
                   ]),
                 ),
               ),

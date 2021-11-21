@@ -1,0 +1,22 @@
+import 'dart:async';
+
+import 'package:hamtarot_app/Services/ss_service.dart';
+import 'package:hamtarot_app/model/ss_model.dart';
+
+class SSController {
+  final Services service;
+  List<SS> ss = List.empty();
+
+  StreamController<bool> onSyncController =
+      StreamController(); // checking status stream onsync (on process / finish)
+  Stream<bool> get onSync => onSyncController.stream;
+
+  SSController(this.service);
+
+  Future<List<SS>> Fectseamsee() async {
+    onSyncController.add(true); // stream connected
+    ss = await service.getseamsee();
+    onSyncController.add(false); // stop connected
+    return ss;
+  }
+}

@@ -1,8 +1,12 @@
 import 'dart:math';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flip_card/flip_card.dart';
+
 import 'package:flutter/material.dart';
+import 'package:hamtarot_app/Card/Card_Result.dart';
 import 'package:hamtarot_app/HomePage.dart';
+import 'package:hamtarot_app/Services/card_service.dart';
+import 'package:hamtarot_app/controller/card_controller.dart';
+import 'package:hamtarot_app/model/card_model.dart';
 
 class MyAppCard1 extends StatefulWidget {
   @override
@@ -19,10 +23,31 @@ class _MyAppCard1State extends State<MyAppCard1> {
         ],
       );
 
+  Services? service;
+  CardController? controller;
+  List<Card1> card = List.empty();
+  int randomIndex = Random().nextInt(10);
+
+  @override
+  void initState() {
+    super.initState();
+
+    service = CardServices();
+    controller = CardController(service!);
+  }
+
+  void getcard() async {
+    var newcard = await controller!.Fectcard();
+
+    setState(() {
+      card = newcard;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      initialIndex: 0,
+      //   initialIndex: 0,
       length: 3,
       child: Scaffold(
         appBar: AppBar(
@@ -50,6 +75,11 @@ class _MyAppCard1State extends State<MyAppCard1> {
         ),
         body: Stack(
           children: <Widget>[
+            Text('คลิกที่ไพ่เพื่อทำนาย',
+                style: TextStyle(
+                  height: 2.0,
+                  fontSize: 20.0,
+                )),
             Container(
               height: 500.0,
               child: Stack(children: <Widget>[
@@ -57,9 +87,32 @@ class _MyAppCard1State extends State<MyAppCard1> {
                   top: 50.0,
                   left: 5.0,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => FirstPage()));
+                    onTap: () async {
+                      getcard();
+                      setState(() {});
+                      await Future.delayed(const Duration(milliseconds: 1000));
+                      await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            Card1 newcard = card[randomIndex];
+                            return AlertDialog(
+                              content: Text('คุณได้ไพ่ใบที่${newcard.id}'),
+                              contentPadding: EdgeInsets.all(30),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => CardResult(
+                                              newcard: newcard,
+                                            ),
+                                          ));
+                                    },
+                                    child: Center(child: Text('ดูคำทำนาย'))),
+                              ],
+                            );
+                          });
                     },
                     child: Image(
                       image: AssetImage('assets/card_back.png'),
@@ -73,9 +126,32 @@ class _MyAppCard1State extends State<MyAppCard1> {
                   top: 50.0,
                   left: 30.0,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => FirstPage()));
+                    onTap: () async {
+                      getcard();
+                      setState(() {});
+                      await Future.delayed(const Duration(milliseconds: 1000));
+                      await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            Card1 newcard = card[randomIndex];
+                            return AlertDialog(
+                              content: Text('คุณได้ไพ่ใบที่${newcard.id}'),
+                              contentPadding: EdgeInsets.all(30),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => CardResult(
+                                              newcard: newcard,
+                                            ),
+                                          ));
+                                    },
+                                    child: Center(child: Text('ดูคำทำนาย'))),
+                              ],
+                            );
+                          });
                     },
                     child: Image(
                       image: AssetImage('assets/card_back.png'),
@@ -89,9 +165,32 @@ class _MyAppCard1State extends State<MyAppCard1> {
                   top: 50.0,
                   left: 60.0,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => FirstPage()));
+                    onTap: () async {
+                      getcard();
+                      setState(() {});
+                      await Future.delayed(const Duration(milliseconds: 1000));
+                      await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            Card1 newcard = card[randomIndex];
+                            return AlertDialog(
+                              content: Text('คุณได้ไพ่ใบที่${newcard.id}'),
+                              contentPadding: EdgeInsets.all(30),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => CardResult(
+                                              newcard: newcard,
+                                            ),
+                                          ));
+                                    },
+                                    child: Center(child: Text('ดูคำทำนาย'))),
+                              ],
+                            );
+                          });
                     },
                     child: Image(
                       image: AssetImage('assets/card_back.png'),
@@ -105,9 +204,32 @@ class _MyAppCard1State extends State<MyAppCard1> {
                   top: 50.0,
                   left: 90.0,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => FirstPage()));
+                    onTap: () async {
+                      getcard();
+                      setState(() {});
+                      await Future.delayed(const Duration(milliseconds: 1000));
+                      await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            Card1 newcard = card[randomIndex];
+                            return AlertDialog(
+                              content: Text('คุณได้ไพ่ใบที่${newcard.id}'),
+                              contentPadding: EdgeInsets.all(30),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => CardResult(
+                                              newcard: newcard,
+                                            ),
+                                          ));
+                                    },
+                                    child: Center(child: Text('ดูคำทำนาย'))),
+                              ],
+                            );
+                          });
                     },
                     child: Image(
                       image: AssetImage('assets/card_back.png'),
@@ -121,11 +243,33 @@ class _MyAppCard1State extends State<MyAppCard1> {
                   top: 50.0,
                   left: 120.0,
                   child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FirstPage()));
+                      onTap: () async {
+                        getcard();
+                        setState(() {});
+                        await Future.delayed(
+                            const Duration(milliseconds: 1000));
+                        await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              Card1 newcard = card[randomIndex];
+                              return AlertDialog(
+                                content: Text('คุณได้ไพ่ใบที่${newcard.id}'),
+                                contentPadding: EdgeInsets.all(30),
+                                actions: <Widget>[
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => CardResult(
+                                                newcard: newcard,
+                                              ),
+                                            ));
+                                      },
+                                      child: Center(child: Text('ดูคำทำนาย'))),
+                                ],
+                              );
+                            });
                       },
                       child: Image(
                         image: AssetImage('assets/card_back.png'),
@@ -138,9 +282,32 @@ class _MyAppCard1State extends State<MyAppCard1> {
                   top: 50.0,
                   left: 150.0,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => FirstPage()));
+                    onTap: () async {
+                      getcard();
+                      setState(() {});
+                      await Future.delayed(const Duration(milliseconds: 2000));
+                      await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            Card1 newcard = card[randomIndex];
+                            return AlertDialog(
+                              content: Text('คุณได้ไพ่ใบที่${newcard.id}'),
+                              contentPadding: EdgeInsets.all(30),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => CardResult(
+                                              newcard: newcard,
+                                            ),
+                                          ));
+                                    },
+                                    child: Center(child: Text('ดูคำทำนาย'))),
+                              ],
+                            );
+                          });
                     },
                     child: Image(
                       image: AssetImage('assets/card_back.png'),
@@ -154,9 +321,32 @@ class _MyAppCard1State extends State<MyAppCard1> {
                   top: 50.0,
                   left: 180.0,
                   child: InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => FirstPage()));
+                    onTap: () async {
+                      getcard();
+                      setState(() {});
+                      await Future.delayed(const Duration(milliseconds: 1000));
+                      await showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            Card1 newcard = card[randomIndex];
+                            return AlertDialog(
+                              content: Text('คุณได้ไพ่ใบที่${newcard.id}'),
+                              contentPadding: EdgeInsets.all(30),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => CardResult(
+                                              newcard: newcard,
+                                            ),
+                                          ));
+                                    },
+                                    child: Center(child: Text('ดูคำทำนาย'))),
+                              ],
+                            );
+                          });
                     },
                     child: Image(
                       image: AssetImage('assets/card_back.png'),
@@ -170,6 +360,34 @@ class _MyAppCard1State extends State<MyAppCard1> {
             ),
           ],
         ),
+        /*   floatingActionButton: FloatingActionButton( 
+         onPressed: ()  async {
+           getcard(); await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+              Card1 newcard = card [randomIndex];
+              return AlertDialog( 
+                  content:
+                  Text('คุณได้ไพ่ใบที่${newcard.id}'),
+                    contentPadding: EdgeInsets.all(30),
+                    actions: <Widget>[
+                      ElevatedButton(
+                       onPressed: () {
+                         Navigator.push(
+                            context,MaterialPageRoute(
+                              builder: (context) => CardResult(newcard: newcard,)
+                            ),
+                         );
+                       }, 
+                       child: Center(child: Text('ดูคำทำนาย'))
+                      ),
+                   ],
+                );
+              }
+           );S
+          },
+         child: Text('ทำนาย'),
+        ),    */
         bottomNavigationBar: SingleChildScrollView(
           child: CurvedNavigationBar(
             color: Color(0xFF6d4c41),
@@ -213,134 +431,9 @@ class _MyAppCard1State extends State<MyAppCard1> {
                   icon: Icon(Icons.account_balance_rounded,
                       size: 30, color: Colors.black)),
             ],
+            // animationDuration: Duration(milliseconds: 200),
             index: 0,
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class FirstPage extends StatefulWidget {
-  @override
-  _FirstPageState createState() => _FirstPageState();
-}
-
-class _FirstPageState extends State<FirstPage> {
-  GlobalKey<FlipCardState> cardKey = GlobalKey<FlipCardState>();
-
-  static var listImagesnotFound = [
-    "assets/card_result-1.png",
-    "assets/card_result-2.png",
-    "assets/card_result-3.png"
-  ];
-  static var _random = Random();
-  var imageToShow =
-      listImagesnotFound[_random.nextInt(listImagesnotFound.length)];
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('ทำนาย'),
-        automaticallyImplyLeading: false,
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyHomePage(),
-                  ),
-                );
-              },
-              icon: Icon(Icons.home)),
-        ],
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Center(
-            child: Container(
-              alignment: Alignment.center,
-              child: FlipCard(
-                direction: FlipDirection.HORIZONTAL,
-                front: Container(
-                    width: 200,
-                    height: 300,
-                    child: Image.asset(
-                      'assets/card_back.png',
-                    )),
-                back: Container(
-                  width: 300,
-                  height: 500,
-                  child: Image.asset(imageToShow.toString()),
-                ),
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/3');
-                },
-                child: Text('ทำนายอีกครั้ง'),
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/9');
-                },
-                child: Text('ไหว้พระเสริมบุญ'),
-              ),
-            ],
-          ),
-        ],
-      ),
-      bottomNavigationBar: SingleChildScrollView(
-        child: CurvedNavigationBar(
-          color: Color(0xFF6d4c41),
-          backgroundColor: Color(0xFFFFF8E1),
-          buttonBackgroundColor: Color(0xFF6d4c41),
-          height: 50,
-          items: <Widget>[
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/3');
-                },
-                icon: Icon(Icons.crop_portrait, size: 30, color: Colors.black)),
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/4');
-                },
-                icon: Icon(Icons.amp_stories_rounded,
-                    size: 30, color: Colors.black)),
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/3');
-                },
-                icon: Icon(Icons.quiz, size: 30, color: Colors.black)),
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/5');
-                },
-                icon:
-                    Icon(Icons.battery_unknown, size: 30, color: Colors.black)),
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/2');
-                },
-                icon: Icon(Icons.date_range_rounded,
-                    size: 30, color: Colors.black)),
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/9');
-                },
-                icon: Icon(Icons.account_balance_rounded,
-                    size: 30, color: Colors.black)),
-          ],
-          index: 0,
         ),
       ),
     );

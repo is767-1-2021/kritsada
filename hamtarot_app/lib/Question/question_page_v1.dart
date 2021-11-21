@@ -1,13 +1,7 @@
-import 'dart:math';
-
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hamtarot_app/HomePage.dart';
-import 'package:hamtarot_app/Question/answer_page.dart';
 import 'package:hamtarot_app/Question/question_form_model.dart';
-import 'package:hamtarot_app/Services/qcard_services.dart';
-import 'package:hamtarot_app/controller/qcard_controller.dart';
-import 'package:hamtarot_app/model/qcard_model.dart';
 import 'package:provider/provider.dart';
 
 class QuestionPage extends StatelessWidget {
@@ -89,7 +83,6 @@ class QuestionPage extends StatelessWidget {
                 icon: Icon(Icons.account_balance_rounded,
                     size: 30, color: Colors.black)),
           ],
-          // animationDuration: Duration(milliseconds: 200),
           index: 2,
         ),
       ),
@@ -106,27 +99,6 @@ class _QuestionFormState extends State<QuestionForm> {
   final _formKey = GlobalKey<FormState>();
   String? _question;
   String? _name;
-  Services? service;
-  QcardController? controller;
-  List<Qcard> qcard = List.empty();
-  int randomIndex = Random().nextInt(2);
-
-  @override
-  void initState() {
-    super.initState();
-
-    service = QcardServices();
-    controller = QcardController(service!);
-  }
-
-  void getQcard() async {
-    var newqcard = await controller!.fectQcard();
-
-    setState(() {
-      qcard = newqcard;
-      // newqcard = qcard[randomIndex];
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,22 +140,14 @@ class _QuestionFormState extends State<QuestionForm> {
           ),
           ElevatedButton(
             onPressed: () {
-              getQcard();
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
 
                 context.read<QuestionFormmodel>().name = _name;
                 context.read<QuestionFormmodel>().question = _question;
 
-                Qcard newqcard = qcard[randomIndex];
-
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AnswerPage(newqcard: newqcard),
-                    ));
+                Navigator.pushNamed(context, '/10');
               }
-              setState(() {});
             },
             child: Text('ทำนาย'),
           ),
