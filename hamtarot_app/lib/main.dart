@@ -4,8 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hamtarot_app/Card/card1.dart';
 import 'package:hamtarot_app/Card/taro1.dart';
 import 'package:hamtarot_app/HomePage.dart';
-import 'package:hamtarot_app/Login/MyLogin.dart';
 import 'package:hamtarot_app/Login/email_sign_in.dart';
+import 'package:hamtarot_app/Login/login.dart';
+import 'package:hamtarot_app/Login/model.dart';
+import 'package:hamtarot_app/Login/signup.dart';
 import 'package:hamtarot_app/Page/Form.dart';
 import 'package:hamtarot_app/Page/form_show.dart';
 import 'package:hamtarot_app/Question/question_form_model.dart';
@@ -30,6 +32,9 @@ void main() async {
           create: (context) => Namemodel(),
         ),
         ChangeNotifierProvider(
+          create: (context) => Loginmodel(),
+        ),
+        ChangeNotifierProvider(
           create: (context) => QuestionFormmodel(),
         ),
         ChangeNotifierProvider(create: (context) => EmailSignInProvider()),
@@ -52,9 +57,9 @@ class MyAppHamtarot extends StatelessWidget {
             Theme.of(context).textTheme,
           ),
         ),
-        initialRoute: '/login',
+        initialRoute: '/11',
         routes: <String, WidgetBuilder>{
-          '/login': (context) => MyLogin(),
+          '/11': (context) => Login(),
           '/1': (context) => MyHomePage(),
           '/2': (context) => FormPage(), //form
           '/7': (context) => Showdata(), //form
@@ -63,6 +68,7 @@ class MyAppHamtarot extends StatelessWidget {
           '/5': (context) => QuestionPage(), //question
           '/6': (context) => ShakePage(), //siamese
           '/9': (context) => ThingView(), //temple
+          '/13': (context) => Signup(),
         });
   }
 }

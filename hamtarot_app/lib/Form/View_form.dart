@@ -1,7 +1,9 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hamtarot_app/HomePage.dart';
+import 'package:hamtarot_app/Login/login.dart';
 import 'package:hamtarot_app/Services/form_services.dart';
 
 import 'package:hamtarot_app/controller/form_controller.dart';
@@ -26,7 +28,7 @@ class _RegisViewState extends State<RegisView> {
 
   List<Formregis> forms = List.empty();
   bool isloading = false;
-
+  final user = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
     super.initState();
@@ -37,7 +39,7 @@ class _RegisViewState extends State<RegisView> {
   }
 
   void getForms() async {
-    var newForms = await controller!.fetchForms();
+    var newForms = await controller!.fetchForms(user!.email);
 
     setState(() {
       forms = newForms;
@@ -50,22 +52,81 @@ class _RegisViewState extends State<RegisView> {
       appBar: AppBar(title: Text('ข้อมูลการลงทะเบียนจองคิว'),
           //automaticallyImplyLeading: false,
           actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyHomePage(),
+            Theme(
+              data: Theme.of(context).copyWith(
+                  textTheme: TextTheme().apply(bodyColor: Colors.black),
+                  dividerColor: Colors.white,
+                  iconTheme: IconThemeData(color: Colors.white)),
+              child: PopupMenuButton<int>(
+                color: Colors.black,
+                itemBuilder: (context) => [
+                  PopupMenuItem<int>(value: 0, child: Text(user!.email!)),
+                  // PopupMenuItem<int>(
+                  //  value: 1, child: Text("Privacy Policy page")),
+                  PopupMenuDivider(),
+                  PopupMenuItem<int>(
+                    value: 3,
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MyHomePage(),
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.home)),
+                        Text("Home"),
+                      ],
                     ),
-                  );
-                },
-                icon: Icon(Icons.home)),
+                  ),
+                  PopupMenuItem<int>(
+                    value: 3,
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MyHomePage(),
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.history)),
+                        Text("History"),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem<int>(
+                    value: 3,
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () async {
+                              await FirebaseAuth.instance.signOut().then(
+                                  (value) => Navigator.of(context)
+                                      .pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) => Login()),
+                                          (route) => false));
+                            },
+                            icon: Icon(Icons.logout)),
+                        Text("Logout"),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ]),
       body: ListView.separated(
         itemCount: forms.isEmpty ? 1 : forms.length,
         itemBuilder: (context, index) {
           if (forms.isEmpty) {
-            return Text("Tap button to fetch Forms");
+            return Text("ไม่พบข้อมูล");
           }
 
           return Row(

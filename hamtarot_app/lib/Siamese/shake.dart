@@ -162,10 +162,10 @@ class _ShakePageState extends State<ShakePage>
                             _name = value;
                           },
                           //initialValue: context.read<Namemodel>().Name,
-                          // initialValue: user!.email),
+                          initialValue: user!.email),
 
-                          initialValue:
-                              context.read<EmailSignInProvider>().userName),
+                      // initialValue:
+                      // context.read<EmailSignInProvider>().userName),
                     ],
                   ),
                 ),

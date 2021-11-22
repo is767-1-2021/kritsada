@@ -13,7 +13,7 @@ class FormController {
 
   FormController(this.service);
 
-  Future<List<Formregis>> fetchForms() async {
+  Future<List<Formregis>> fetchForms(String? email) async {
     onSyncController.add(true);
     forms = await service.getForms();
     onSyncController.add(false);

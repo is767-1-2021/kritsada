@@ -1,7 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:hamtarot_app/Login/MyLogin.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:hamtarot_app/Form/View_form.dart';
+import 'package:hamtarot_app/Login/login.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, this.title}) : super(key: key);
@@ -18,51 +20,88 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Icon(Icons.brightness_4_sharp, size: 30),
-            Text(
-              'HAMTAROT',
-              style: TextStyle(fontSize: 25),
+          automaticallyImplyLeading: false,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Icon(Icons.brightness_4_sharp, size: 30),
+              Text(
+                'HAMTAROT',
+                style: TextStyle(fontSize: 25),
+              ),
+            ],
+          ),
+          actions: [
+            Theme(
+              data: Theme.of(context).copyWith(
+                  textTheme: TextTheme().apply(bodyColor: Colors.black),
+                  dividerColor: Colors.white,
+                  iconTheme: IconThemeData(color: Colors.white)),
+              child: PopupMenuButton<int>(
+                color: Colors.black,
+                itemBuilder: (context) => [
+                  PopupMenuItem<int>(value: 0, child: Text(user!.email!)),
+                  // PopupMenuItem<int>(
+                  //  value: 1, child: Text("Privacy Policy page")),
+                  PopupMenuDivider(),
+                  PopupMenuItem<int>(
+                    value: 3,
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MyHomePage(),
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.home)),
+                        Text("Home"),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem<int>(
+                    value: 3,
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RegisView(),
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.history)),
+                        Text("History"),
+                      ],
+                    ),
+                  ),
+                  PopupMenuItem<int>(
+                    value: 3,
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () async {
+                              await FirebaseAuth.instance.signOut().then(
+                                  (value) => Navigator.of(context)
+                                      .pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) => Login()),
+                                          (route) => false));
+                            },
+                            icon: Icon(Icons.logout)),
+                        Text("Logout"),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-            IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyLogin(),
-                      //LogInPage(),
-                      //AuthExampleApp(),
-                      //HomeScreen(),
-                    ),
-                  );
-                },
-                icon: Icon(Icons.login, size: 30)),
-            IconButton(
-                onPressed: () async {
-                  FirebaseAuth.instance.signOut();
-                  // context.read<AuthenticationProvider>().signOut();
-                  /* Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AuthExampleApp(),
-                      //LogInPage(),
-                      //AuthExampleApp(),
-                      //HomeScreen(),
-                    ),
-                  );*/
-                  await FirebaseAuth.instance.signOut().then((value) =>
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (context) => MyLogin()),
-                          (route) => false));
-                },
-                icon: Icon(Icons.logout, size: 30)),
-            //Icon(Icons.settings, size: 30)
-          ],
-        ),
-      ),
+          ]),
       body: SingleChildScrollView(
         child: Column(children: [
           Center(

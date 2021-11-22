@@ -96,8 +96,7 @@ class _ThingViewState extends State<ThingView> {
           items: <Widget>[
             IconButton(
                 onPressed: () {
-                  gettemple();
-                  // Navigator.pushNamed(context, '/3');
+                  Navigator.pushNamed(context, '/3');
                 },
                 icon: Icon(Icons.crop_portrait, size: 30, color: Colors.black)),
             IconButton(

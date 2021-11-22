@@ -1,4 +1,5 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hamtarot_app/Form/View_form.dart';
 
@@ -114,6 +115,7 @@ class _BookingFormState extends State<BookingForm> {
   DateTime? _resdate;
   DateTime? value;
 
+  final user = FirebaseAuth.instance.currentUser;
   //final int docid;
 
   //@override
@@ -192,6 +194,7 @@ class _BookingFormState extends State<BookingForm> {
                 _mail = value;
               },
               //   initialValue: context.read<DataFormModel>().mail,
+              initialValue: user!.email,
             ),
             DateTimeField(
               decoration: const InputDecoration(
