@@ -4,8 +4,9 @@ class SS {
   final int id;
   final String content;
   final String img;
+  final String result;
 
-  SS(this.id, this.content, this.img);
+  SS(this.id, this.content, this.img, this.result);
 
   factory SS.fromJson(
     Map<String, dynamic> json,
@@ -14,6 +15,7 @@ class SS {
       json['id'] as int,
       json['content'] as String,
       json['img'] as String,
+      json['result'] as String,
     );
   }
 }

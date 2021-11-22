@@ -2,19 +2,15 @@ import 'dart:async';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:hamtarot_app/HomePage.dart';
-import 'package:hamtarot_app/Login/email_sign_in.dart';
+import 'package:hamtarot_app/Login/model.dart';
 import 'package:hamtarot_app/Services/ss_service.dart';
-import 'package:hamtarot_app/Siamese/model.dart';
 import 'package:hamtarot_app/Siamese/result.dart';
 import 'package:hamtarot_app/controller/ss_controller.dart';
 import 'package:hamtarot_app/model/ss_model.dart';
-
 import 'dart:math' as match;
-
 import 'package:provider/provider.dart';
 
 // class RandomList {
@@ -34,14 +30,13 @@ class _ShakePageState extends State<ShakePage>
     with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<double> animation;
-  final _formKey = GlobalKey<FormState>();
-  String? _name;
+  // final _formKey = GlobalKey<FormState>();
+
   Services? service;
   SSController? controller;
   List<SS> ss = List.empty();
   int randomIndex = Random().nextInt(10);
 
-  final user = FirebaseAuth.instance.currentUser;
   @override
   void initState() {
     super.initState();
@@ -133,49 +128,12 @@ class _ShakePageState extends State<ShakePage>
                   ],
                 ),
               ),
-              Form(
-                key: _formKey,
-                child: Container(
-                  width: 300,
-                  padding: EdgeInsets.only(left: 40, right: 50),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                          decoration: InputDecoration(
-                            hintText: '2.โปรดระบุชื่อของคุณ',
-                            hintStyle:
-                                TextStyle(fontSize: 16, color: Colors.black),
-                            border: UnderlineInputBorder(),
-
-                            // labelText: '2.โปรดระบุชื่อของคุณ',
-                            // // labelStyle:
-                            //     TextStyle(fontSize: 14, color: Colors.black)
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return '*';
-                            }
-
-                            return null;
-                          },
-                          onSaved: (value) {
-                            _name = value;
-                          },
-                          //initialValue: context.read<Namemodel>().Name,
-                          initialValue: user!.email),
-
-                      // initialValue:
-                      // context.read<EmailSignInProvider>().userName),
-                    ],
-                  ),
-                ),
-              ),
               Container(
                 width: 300,
                 padding: EdgeInsets.only(left: 40, bottom: 10, top: 5),
                 child: Row(
                   children: [
-                    Text('3.กด', style: TextStyle(fontSize: 16)),
+                    Text('2.กด', style: TextStyle(fontSize: 16)),
                     Icon(Icons.touch_app_outlined),
                     Text('เพื่อเริ่มทำนายได้เลย!',
                         style: TextStyle(fontSize: 16))
@@ -201,54 +159,46 @@ class _ShakePageState extends State<ShakePage>
                 iconSize: 40,
                 onPressed: () async {
                   getseamsee();
-                  if (_formKey.currentState!.validate()) {
-                    _formKey.currentState!.save();
-                    context.read<Namemodel>().Name = _name;
-                    animationController.repeat();
 
-                    await Future.delayed(const Duration(milliseconds: 5000),
-                        () {
-                      setState(() {
-                        animationController.stop();
-                      });
+                  animationController.repeat();
+                  await Future.delayed(const Duration(milliseconds: 5000), () {
+                    setState(() {
+                      animationController.stop();
                     });
+                  });
 
-                    // Navigator.pushNamed(context, '/8');
-                    await showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        SS newss = ss[randomIndex];
-                        return AlertDialog(
-                          content: Text('คุณได้ใบเซียมซีเลขที่${newss.id}'),
-                          contentPadding: EdgeInsets.all(30),
-                          actions: <Widget>[
-                            ElevatedButton(
+                  // Navigator.pushNamed(context, '/8');
+                  await showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      SS newss = ss[randomIndex];
+                      return AlertDialog(
+                        content: Text('คุณได้ใบเซียมซีเลขที่${newss.id}'),
+                        contentPadding: EdgeInsets.all(30),
+                        actions: <Widget>[
+                          Consumer<Loginmodel>(builder: (context, form, child) {
+                            return ElevatedButton(
                                 onPressed: () async {
-                                  await FirebaseFirestore.instance
-                                      .collection('ham_test')
+                                  FirebaseFirestore.instance
+                                      .collection('ham_history')
                                       .add({
-                                    'username': user!.email,
-                                    //'username': context.read<EmailSignInProvider>()
-                                    'resultnumber': newss.id,
-                                    'timeStamp': Timestamp.now()
+                                    'email': form.email,
+                                    'result': newss.result,
+                                    'historydate': Timestamp.now()
                                   });
-
-                                  Navigator.push(
+                                  await Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             ResultRandom(newss: newss),
                                       ));
                                 },
-                                child: Center(child: Text('ดูคำทำนาย')))
-                          ],
-                        );
-                      },
-                    );
-                  } else
-                    () {
-                      setState(() {});
-                    };
+                                child: Center(child: Text('ดูคำทำนาย')));
+                          }),
+                        ],
+                      );
+                    },
+                  );
                 },
               ),
             ],

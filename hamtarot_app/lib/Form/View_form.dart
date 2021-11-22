@@ -49,8 +49,9 @@ class _RegisViewState extends State<RegisView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('ข้อมูลการลงทะเบียนจองคิว'),
-          //automaticallyImplyLeading: false,
+      appBar: AppBar(
+          title: Text('ข้อมูลการลงทะเบียนจองคิว'),
+          automaticallyImplyLeading: false,
           actions: [
             Theme(
               data: Theme.of(context).copyWith(

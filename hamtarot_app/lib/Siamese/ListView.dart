@@ -183,21 +183,7 @@ class ThingDetail extends StatelessWidget {
                     )),
               ],
             ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                    padding: EdgeInsets.only(top: 10, left: 20, right: 20),
-                    child: Row(
-                      children: [
-                        Icon(Icons.location_pin),
-                        Container(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text('พิกัดเส้นทาง :  ${newtemple.time}')),
-                      ],
-                    )),
-              ],
-            ),
+
             // Row(
             //   crossAxisAlignment: CrossAxisAlignment.start,
             //   children: [

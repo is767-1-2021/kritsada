@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hamtarot_app/Card/3cardselect.dart';
 import 'package:hamtarot_app/Card/card1.dart';
-import 'package:hamtarot_app/Card/taro1.dart';
 import 'package:hamtarot_app/HomePage.dart';
-import 'package:hamtarot_app/Login/email_sign_in.dart';
+
 import 'package:hamtarot_app/Login/login.dart';
 import 'package:hamtarot_app/Login/model.dart';
 import 'package:hamtarot_app/Login/signup.dart';
@@ -15,7 +15,7 @@ import 'package:hamtarot_app/Question/question_page.dart';
 import 'package:hamtarot_app/Siamese/ListView.dart';
 import 'package:hamtarot_app/Siamese/shake.dart';
 import 'package:provider/provider.dart';
-import 'Siamese/model.dart';
+
 import 'model/DataFormModel.dart';
 
 void main() async {
@@ -29,15 +29,11 @@ void main() async {
           create: (context) => DataFormModel(),
         ),
         ChangeNotifierProvider(
-          create: (context) => Namemodel(),
-        ),
-        ChangeNotifierProvider(
           create: (context) => Loginmodel(),
         ),
         ChangeNotifierProvider(
           create: (context) => QuestionFormmodel(),
         ),
-        ChangeNotifierProvider(create: (context) => EmailSignInProvider()),
       ],
       child: MyAppHamtarot(),
     ),

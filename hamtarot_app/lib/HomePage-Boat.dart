@@ -1,11 +1,9 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:hamtarot_app/Form/View_form.dart';
-import 'package:hamtarot_app/History/history_page.dart';
 import 'package:hamtarot_app/Login/login.dart';
-import 'package:hamtarot_app/Login/model.dart';
-import 'package:provider/provider.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key? key, this.title}) : super(key: key);
@@ -34,97 +32,93 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
           actions: [
-            Consumer<Loginmodel>(builder: (context, form, child) {
-              return Theme(
-                data: Theme.of(context).copyWith(
-                    textTheme: TextTheme().apply(bodyColor: Colors.black),
-                    dividerColor: Colors.white,
-                    iconTheme: IconThemeData(color: Colors.white)),
-                child: PopupMenuButton<int>(
-                  color: Colors.black,
-                  itemBuilder: (context) => [
-                    PopupMenuItem<int>(value: 0, child: Text(form.email)),
-                    // PopupMenuItem<int>(
-                    //  value: 1, child: Text("Privacy Policy page")),
-                    PopupMenuDivider(),
-                    PopupMenuItem<int>(
-                      value: 4,
-                      child: Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => MyHomePage(),
-                                  ),
-                                );
-                              },
-                              icon: Icon(Icons.home)),
-                          Text("Home"),
-                        ],
-                      ),
+            Theme(
+              data: Theme.of(context).copyWith(
+                  textTheme: TextTheme().apply(bodyColor: Colors.brown),
+                  dividerColor: Colors.white,
+                  iconTheme: IconThemeData(color: Colors.white)),
+              child: PopupMenuButton<int>(
+                color: Colors.black,
+                itemBuilder: (context) => [
+                  PopupMenuItem<int>(value: 0, child: Text(user!.email!)),
+                  // PopupMenuItem<int>(
+                  //  value: 1, child: Text("Privacy Policy page")),
+                  PopupMenuDivider(),
+                  PopupMenuItem<int>(
+                    value: 3,
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MyHomePage(),
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.home)),
+                        Text("Home"),
+                      ],
                     ),
-                    PopupMenuItem<int>(
-                      value: 4,
-                      child: Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => History_page(),
-                                  ),
-                                );
-                              },
-                              icon: Icon(Icons.history)),
-                          Text("Result History"),
-                        ],
-                      ),
+                  ),
+                  PopupMenuItem<int>(
+                    value: 3,
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RegisView(),
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.history)),
+                        Text("ประวัติผลคำทำนาย"),
+                      ],
                     ),
-                    PopupMenuItem<int>(
-                      value: 4,
-                      child: Row(
-                        children: [
-                          IconButton(
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => RegisView(),
-                                  ),
-                                );
-                              },
-                              icon: Icon(Icons.schedule)),
-                          Text("Booking History"),
-                        ],
-                      ),
+                  ),
+                  PopupMenuItem<int>(
+                    value: 3,
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RegisView(),
+                                ),
+                              );
+                            },
+                            icon: Icon(Icons.history_sharp)),
+                        Text("ประวัติการจองคิว"),
+                      ],
                     ),
-                    PopupMenuItem<int>(
-                      value: 4,
-                      child: Row(
-                        children: [
-                          IconButton(
-                              onPressed: () async {
-                                await FirebaseAuth.instance.signOut().then(
-                                    (value) => Navigator.of(context)
-                                        .pushAndRemoveUntil(
-                                            MaterialPageRoute(
-                                                builder: (context) => Login()),
-                                            (route) => false));
-                              },
-                              icon: Icon(Icons.logout)),
-                          Text("Logout"),
-                        ],
-                      ),
+                  ),
+                  PopupMenuItem<int>(
+                    value: 3,
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () async {
+                              await FirebaseAuth.instance.signOut().then(
+                                  (value) => Navigator.of(context)
+                                      .pushAndRemoveUntil(
+                                          MaterialPageRoute(
+                                              builder: (context) => Login()),
+                                          (route) => false));
+                            },
+                            icon: Icon(Icons.logout)),
+                        Text("Logout"),
+                      ],
                     ),
-                  ],
-                ),
-              );
-            }),
-
-            //
+                  ),
+                ],
+              ),
+            ),
           ]),
       body: SingleChildScrollView(
         child: Column(children: [

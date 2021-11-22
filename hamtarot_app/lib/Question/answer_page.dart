@@ -1,13 +1,10 @@
-//import 'dart:math';
-
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+// import 'package:flip_card/flip_card.dart';
 import 'package:flutter/material.dart';
 import 'package:hamtarot_app/HomePage.dart';
 import 'package:hamtarot_app/Question/question_form_model.dart';
 import 'package:hamtarot_app/Question/question_page.dart';
-// import 'package:hamtarot_app/controllers/qcard_controller.dart';
-import 'package:hamtarot_app/model/qcard_model.dart';
-// import 'package:hamtarot_app/services/qcard_services.dart';
+import 'package:hamtarot_app/Question/qcard_model.dart';
 
 import 'package:provider/provider.dart';
 
@@ -20,40 +17,12 @@ class AnswerPage extends StatefulWidget {
 }
 
 class _AnswerPageState extends State<AnswerPage> {
-  //Services? service;
-  // QcardController? controller;
-  // List<Qcard> qcard = List.empty();
-  //  int randomIndex = Random().nextInt(10);
-  // final number = Random().nextInt(3) + 1;
-
   @override
-  // void initState() {
-  //   super.initState();
-
-  //   service = QcardServices();
-  //   controller = QcardController(service!);
-  // }
-
-  // void getQcard() async {
-  // var newQcard = await controller!.fectQcard()();
-  // setState(() {
-  //   qcards = newQcard;
-  // });
-  // }
-
-  //     void _getTodos() async {
-  //   var newTodos = await widget.controller.fectTodos();
-  //   setState(() {
-  //     todos = newTodos;
-  //   });
-  // }
-
   Widget build(BuildContext context) {
-    // var newqcard;
     return Scaffold(
       appBar: AppBar(
         title: Text('ผลคำทำนาย'),
-        //automaticallyImplyLeading: false,
+        automaticallyImplyLeading: false,
         actions: [
           IconButton(
               onPressed: () {
@@ -80,78 +49,28 @@ class _AnswerPageState extends State<AnswerPage> {
                 },
               ),
             ),
-
             Container(
               child: Padding(
                 padding: EdgeInsets.only(right: 20, left: 20),
                 child: Column(
                   children: [
-                    Text('${widget.newqcard.name}',
+                    Text('${widget.newqcard.title}',
                         style: TextStyle(fontSize: 20)),
-                    Image.asset(
-                      'assets/card_front1.png',
+                    Image.network(
+                      widget.newqcard.img,
                       width: 200,
-                      height: 300,
-                    ), //แก้เป็นnetwork
+                      height: 350,
+                    ),
                     Consumer<QuestionFormmodel>(
                       builder: (context, form, child) {
                         return Text(
-                            'จากคำถาม ${form.question} \n ${widget.newqcard.content}');
+                            'จากคำถาม ${form.question}  ${widget.newqcard.content}');
                       },
                     ),
                   ],
                 ),
               ),
             ),
-            // number == 2
-            //     ? Container(
-            //         child: Padding(
-            //           padding: EdgeInsets.only(right: 20, left: 20),
-            //           child: Column(
-            //             children: [
-            //               Text('ไพ่สองเหรียญ', style: TextStyle(fontSize: 20)),
-            //               Image.asset(
-            //                 'assets/card_front2.png',
-            //                 width: 200,
-            //                 height: 300,
-            //               ),
-            //               Consumer<QuestionFormmodel>(
-            //                 builder: (context, form, child) {
-            //                   return Center(
-            //                     child: Text(
-            //                         'จากคำถาม ${form.question} \nไพ่ใบนี้เป็นความโดดเด่นโดยเฉพาะในด้านความคิด อารมณ์ เปรียบเสมือนแสงอาทิตย์ที่ส่องสว่าง ให้ความสดใสแก่ทุกชีวิต ไพ่จึงหมายถึง ความสุข ความร่าเริง ความแจ่มใส ทุกๆอย่างกำลังเป็นไปในทางที่ดี และตัวดอกทานตะวันที่หมายถึงความหวัง ทำให้ไพ่ใบนี้ดูสดใสขึ้นไปอีก '),
-            //                   );
-            //                 },
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //       )
-            //     : SizedBox(),
-            // number == 3
-            //     ? Container(
-            //         child: Padding(
-            //           padding: EdgeInsets.only(right: 20, left: 20),
-            //           child: Column(
-            //             mainAxisAlignment: MainAxisAlignment.center,
-            //             children: [
-            //               Text('ไพ่สามเหรียญ', style: TextStyle(fontSize: 20)),
-            //               Image.asset(
-            //                 'assets/card_front3.png',
-            //                 width: 200,
-            //                 height: 300,
-            //               ),
-            //               Consumer<QuestionFormmodel>(
-            //                 builder: (context, form, child) {
-            //                   return Text(
-            //                       'จากคำถาม ${form.question} ไพ่ใบนี้บอกว่า ควรระวังเกี่ยวกับการพัง การเกิดภัยพิบัติ การเกิดอุบัติเหตุ หรือการเปลี่ยนแปลง');
-            //                 },
-            //               ),
-            //             ],
-            //           ),
-            //         ),
-            //       )
-            //     : SizedBox(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
@@ -170,11 +89,6 @@ class _AnswerPageState extends State<AnswerPage> {
                   },
                   child: Text('ทำนายใหม่อีกครั้ง'),
                 ),
-                /*  ElevatedButton(
-                  onPressed: () {},
-                  child: Text('แชร์คำทำนาย'),
-                ),*/
-
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/9');
@@ -183,12 +97,6 @@ class _AnswerPageState extends State<AnswerPage> {
                 ),
               ],
             ),
-            /*  ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/9');
-              },
-              child: Text('ไหว้พระเสริมบุญ'),
-            ),*/
           ],
         ),
       ),
@@ -234,7 +142,6 @@ class _AnswerPageState extends State<AnswerPage> {
                 icon: Icon(Icons.account_balance_rounded,
                     size: 30, color: Colors.black)),
           ],
-          //  animationDuration: Duration(milliseconds: 200),
           index: 2,
         ),
       ),

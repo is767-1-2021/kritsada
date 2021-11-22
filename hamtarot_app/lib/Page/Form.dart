@@ -1,7 +1,6 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hamtarot_app/Form/View_form.dart';
 
 import 'package:hamtarot_app/Form/datetime_picker_formfield.dart';
 import 'package:hamtarot_app/Form/email_validator.dart';
@@ -23,7 +22,7 @@ class FormPage extends StatelessWidget {
         title: Text('จองคิวดูดวง'),
         automaticallyImplyLeading: false,
         actions: [
-          IconButton(
+          /*   IconButton(
             onPressed: () {
               Navigator.push(
                 context,
@@ -35,7 +34,7 @@ class FormPage extends StatelessWidget {
             icon: Icon(
               Icons.document_scanner_outlined,
             ),
-          ),
+          ),*/
           IconButton(
             onPressed: () {
               Navigator.push(
@@ -260,11 +259,12 @@ class _BookingFormState extends State<BookingForm> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-
+                        String card1 = 'การ์ดที่ ';
+                        //String card3 = 'การ์ดที่ ';
                         await FirebaseFirestore.instance
                             .collection('ham_form')
                             .add({
-                          'form_name': _name,
+                          'form_name': '$card1' + '$_name',
                           'form_telnum': _telnum,
                           'form_mail': _mail,
                           'form_resdate': _resdate

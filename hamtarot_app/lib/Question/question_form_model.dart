@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class QuestionFormmodel extends ChangeNotifier {
   String? _name;
   String? _question;
+  int? _id;
 
   get name => this._name;
   set name(value) {
