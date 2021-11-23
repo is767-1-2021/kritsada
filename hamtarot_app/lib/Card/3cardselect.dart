@@ -157,7 +157,7 @@ class _MyAppCard3State extends State<MyAppCard3> {
               : ElevatedButton(
                   onPressed: () async {
                     getthreecard();
-                    await Future.delayed(const Duration(milliseconds: 700));
+                    await Future.delayed(const Duration(milliseconds: 2000));
                     showDialog(
                         context: context,
                         builder: (BuildContext context) {

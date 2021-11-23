@@ -97,7 +97,7 @@ class _ResultRandomState extends State<ResultRandom> {
                               //       fontSize: 20,
                               //       fontWeight: FontWeight.w600),
                               // ),
-                              Text(widget.newthreecard.pastcontent,
+                              Text('  ' + widget.newthreecard.pastcontent,
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.white)),
                             ],
@@ -153,7 +153,7 @@ class _ResultRandomState extends State<ResultRandom> {
                               ),
                               Center(
                                 child: Text(
-                                  widget.newthreecard.presentcontent,
+                                  '  ' + widget.newthreecard.presentcontent,
                                   style: TextStyle(
                                       fontSize: 16, color: Colors.white),
                                 ),
@@ -211,7 +211,7 @@ class _ResultRandomState extends State<ResultRandom> {
                       ),
                       Center(
                         child: Text(
-                          widget.newthreecard.futurecontent,
+                          '  ' + widget.newthreecard.futurecontent,
                           style: TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ),

@@ -259,12 +259,11 @@ class _BookingFormState extends State<BookingForm> {
                     onPressed: () async {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        String card1 = 'การ์ดที่ ';
-                        //String card3 = 'การ์ดที่ ';
+
                         await FirebaseFirestore.instance
                             .collection('ham_form')
                             .add({
-                          'form_name': '$card1' + '$_name',
+                          'form_name': _name,
                           'form_telnum': _telnum,
                           'form_mail': _mail,
                           'form_resdate': _resdate

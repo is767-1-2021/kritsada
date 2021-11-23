@@ -61,7 +61,7 @@ class _CardResultState extends State<CardResult> {
                       ),
                       Container(
                         child: Text(
-                          'คุณได้ไพ่${widget.newcard.card}',
+                          'คุณได้ไพ่ ${widget.newcard.card}',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),

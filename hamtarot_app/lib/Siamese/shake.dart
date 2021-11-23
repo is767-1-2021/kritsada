@@ -173,7 +173,7 @@ class _ShakePageState extends State<ShakePage>
                     builder: (BuildContext context) {
                       SS newss = ss[randomIndex];
                       return AlertDialog(
-                        content: Text('คุณได้ใบเซียมซีเลขที่${newss.id}'),
+                        content: Text('คุณได้ใบเซียมซีเลขที่ ${newss.id}'),
                         contentPadding: EdgeInsets.all(30),
                         actions: <Widget>[
                           Consumer<Loginmodel>(builder: (context, form, child) {

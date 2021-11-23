@@ -2,13 +2,16 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hamtarot_app/History/history_page.dart';
 import 'package:hamtarot_app/HomePage.dart';
 import 'package:hamtarot_app/Login/login.dart';
+import 'package:hamtarot_app/Login/model.dart';
 import 'package:hamtarot_app/Services/form_services.dart';
 
 import 'package:hamtarot_app/controller/form_controller.dart';
 import 'package:hamtarot_app/model/form_model.dart';
-import 'package:intl/intl.dart'; //add this import statement for using DateTime class
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart'; //add this import statement for using DateTime class
 
 String getTime(var time) {
   final DateFormat formatter =
@@ -53,87 +56,115 @@ class _RegisViewState extends State<RegisView> {
           title: Text('ข้อมูลการลงทะเบียนจองคิว'),
           automaticallyImplyLeading: false,
           actions: [
-            Theme(
-              data: Theme.of(context).copyWith(
-                  textTheme: TextTheme().apply(bodyColor: Colors.black),
-                  dividerColor: Colors.white,
-                  iconTheme: IconThemeData(color: Colors.white)),
-              child: PopupMenuButton<int>(
-                color: Colors.black,
-                itemBuilder: (context) => [
-                  PopupMenuItem<int>(value: 0, child: Text(user!.email!)),
-                  // PopupMenuItem<int>(
-                  //  value: 1, child: Text("Privacy Policy page")),
-                  PopupMenuDivider(),
-                  PopupMenuItem<int>(
-                    value: 3,
-                    child: Row(
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => MyHomePage(),
-                                ),
-                              );
-                            },
-                            icon: Icon(Icons.home)),
-                        Text("Home"),
-                      ],
+            Consumer<Loginmodel>(builder: (context, form, child) {
+              return Theme(
+                data: Theme.of(context).copyWith(
+                    textTheme: TextTheme().apply(bodyColor: Colors.black),
+                    dividerColor: Colors.white,
+                    iconTheme: IconThemeData(color: Colors.white)),
+                child: PopupMenuButton<int>(
+                  color: Colors.black,
+                  itemBuilder: (context) => [
+                    PopupMenuItem<int>(value: 0, child: Text(form.email)),
+                    // PopupMenuItem<int>(
+                    //  value: 1, child: Text("Privacy Policy page")),
+                    PopupMenuDivider(),
+                    PopupMenuItem<int>(
+                      value: 4,
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MyHomePage(),
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.home)),
+                          Text("Home"),
+                        ],
+                      ),
                     ),
-                  ),
-                  PopupMenuItem<int>(
-                    value: 3,
-                    child: Row(
-                      children: [
-                        IconButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => MyHomePage(),
-                                ),
-                              );
-                            },
-                            icon: Icon(Icons.history)),
-                        Text("History"),
-                      ],
+                    PopupMenuItem<int>(
+                      value: 4,
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => History_page(),
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.history)),
+                          Text("Result History"),
+                        ],
+                      ),
                     ),
-                  ),
-                  PopupMenuItem<int>(
-                    value: 3,
-                    child: Row(
-                      children: [
-                        IconButton(
-                            onPressed: () async {
-                              await FirebaseAuth.instance.signOut().then(
-                                  (value) => Navigator.of(context)
-                                      .pushAndRemoveUntil(
-                                          MaterialPageRoute(
-                                              builder: (context) => Login()),
-                                          (route) => false));
-                            },
-                            icon: Icon(Icons.logout)),
-                        Text("Logout"),
-                      ],
+                    PopupMenuItem<int>(
+                      value: 4,
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RegisView(),
+                                  ),
+                                );
+                              },
+                              icon: Icon(Icons.schedule)),
+                          Text("Booking History"),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
+                    PopupMenuItem<int>(
+                      value: 4,
+                      child: Row(
+                        children: [
+                          IconButton(
+                              onPressed: () async {
+                                await FirebaseAuth.instance.signOut().then(
+                                    (value) => Navigator.of(context)
+                                        .pushAndRemoveUntil(
+                                            MaterialPageRoute(
+                                                builder: (context) => Login()),
+                                            (route) => false));
+                              },
+                              icon: Icon(Icons.logout)),
+                          Text("Logout"),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
           ]),
       body: ListView.separated(
         itemCount: forms.isEmpty ? 1 : forms.length,
         itemBuilder: (context, index) {
           if (forms.isEmpty) {
-            return Text("ไม่พบข้อมูล");
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text("ไม่พบข้อมูล"),
+              ],
+            );
           }
 
           return Row(
             children: [
-              Row(
-                children: [Icon(Icons.date_range_rounded)],
+              Container(
+                padding: EdgeInsets.only(right: 5, left: 10),
+                child: Row(
+                  children: [Icon(Icons.date_range_rounded)],
+                ),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,51 +211,6 @@ class _RegisViewState extends State<RegisView> {
             color: Colors.black,
           );
         },
-      ),
-      bottomNavigationBar: SingleChildScrollView(
-        child: CurvedNavigationBar(
-          color: Color(0xFF6d4c41),
-          backgroundColor: Color(0xFFFFF8E1),
-          buttonBackgroundColor: Color(0xFF6d4c41),
-          height: 50,
-          items: <Widget>[
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/3');
-                },
-                icon: Icon(Icons.crop_portrait, size: 30, color: Colors.black)),
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/4');
-                },
-                icon: Icon(Icons.amp_stories_rounded,
-                    size: 30, color: Colors.black)),
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/5');
-                },
-                icon: Icon(Icons.quiz, size: 30, color: Colors.black)),
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/6');
-                },
-                icon:
-                    Icon(Icons.battery_unknown, size: 30, color: Colors.black)),
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/2');
-                },
-                icon: Icon(Icons.date_range_rounded,
-                    size: 30, color: Colors.black)),
-            IconButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/9');
-                },
-                icon: Icon(Icons.account_balance_rounded,
-                    size: 30, color: Colors.black)),
-          ],
-          index: 4,
-        ),
       ),
     );
   }

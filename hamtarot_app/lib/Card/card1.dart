@@ -77,11 +77,16 @@ class _MyAppCard1State extends State<MyAppCard1> {
         ),
         body: Stack(
           children: <Widget>[
-            Text('คลิกที่ไพ่เพื่อทำนาย',
-                style: TextStyle(
-                  height: 2.0,
-                  fontSize: 20.0,
-                )),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('อธิษฐานและโปรดเลือกไพ่',
+                    style: TextStyle(
+                      height: 2.0,
+                      fontSize: 20.0,
+                    )),
+              ],
+            ),
             Container(
               height: 500.0,
               child: Stack(children: <Widget>[

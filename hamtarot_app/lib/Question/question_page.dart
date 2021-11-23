@@ -130,7 +130,7 @@ class _QuestionFormState extends State<QuestionForm> {
       key: _formKey,
       child: Column(
         children: [
-          TextFormField(
+          /*   TextFormField(
             decoration: InputDecoration(
               border: UnderlineInputBorder(),
               labelText: 'ชื่อของคุณ',
@@ -145,7 +145,7 @@ class _QuestionFormState extends State<QuestionForm> {
             onSaved: (value) {
               _name = value;
             },
-          ),
+          ),*/
           TextFormField(
             decoration: InputDecoration(
               border: UnderlineInputBorder(),
@@ -162,6 +162,7 @@ class _QuestionFormState extends State<QuestionForm> {
               _question = value;
             },
           ),
+
           ElevatedButton(
             onPressed: () async {
               getQcard();
@@ -186,11 +187,15 @@ class _QuestionFormState extends State<QuestionForm> {
                             return ElevatedButton(
                                 onPressed: () async {
                                   String cardname = 'คุณได้ไพ่ ';
+                                  String sentence = ' เป็นคำตอบ';
+
                                   await FirebaseFirestore.instance
                                       .collection('ham_history')
                                       .add({
                                     'email': form.email,
-                                    'result': '$cardname' + '${newqcard.title}',
+                                    'result': '$cardname' +
+                                        '${newqcard.title}' +
+                                        '$sentence',
                                     'historydate': Timestamp.now(),
                                   });
                                   await Navigator.push(
@@ -214,6 +219,13 @@ class _QuestionFormState extends State<QuestionForm> {
             },
             child: Text('ทำนาย'),
           ),
+
+          // ElevatedButton(
+          //   onPressed: () {
+          //     Navigator.pushNamed(context, '/h');
+          //   },
+          //   child: Text('ประวัติการเปิดไพ่'),
+          // ),
         ],
       ),
     );
